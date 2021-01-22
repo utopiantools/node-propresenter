@@ -1,0 +1,28 @@
+{
+  "name": "propresenter",
+  "version": "1.0.0",
+  "description": "Node module for interacting with ProPresenter versions 6 and 7.",
+  "main": "pro.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/utopiantools/node-propresenter.git"
+  },
+  "keywords": [
+    "renewedvision",
+    "propresenter",
+    "pro6",
+    "pro7"
+  ],
+  "author": "Jeff Mikels and Charles Garwood",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/utopiantools/node-propresenter/issues"
+  },
+  "homepage": "https://github.com/utopiantools/node-propresenter#readme",
+  "dependencies": {
+    "ws": "^7.4.2"
+  }
+}
