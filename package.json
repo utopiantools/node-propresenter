@@ -1,6 +1,6 @@
 {
-  "name": "propresenter",
-  "version": "1.0.0",
+  "name": "@utopian/propresenter",
+  "version": "0.0.1",
   "description": "Node module for interacting with ProPresenter versions 6 and 7.",
   "main": "pro.js",
   "scripts": {
@@ -24,5 +24,6 @@
   "homepage": "https://github.com/utopiantools/node-propresenter#readme",
   "dependencies": {
     "ws": "^7.4.2"
-  }
+  },
+  "devDependencies": {}
 }
