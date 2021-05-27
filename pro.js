@@ -30,7 +30,7 @@ class ProSlide {
 
 // listens to ProPresenter as a stage display client
 class ProSDClient extends EventEmitter {
-	constructor ( host, port, password, version = 6, parent ) {
+	constructor ( host, port, password, version = 6, parent = null ) {
 		super();
 		this.host = host;
 		this.port = port;
@@ -60,6 +60,11 @@ class ProSDClient extends EventEmitter {
 		this.connect();
 	}
 
+	log( s ) {
+		if ( this.parent != null ) this.parent.log( s );
+		else console.log( s );
+	}
+
 	notify() {
 		this.emit( 'update', this );
 	}
@@ -85,7 +90,7 @@ class ProSDClient extends EventEmitter {
 
 
 	reconnect( delay = 0 ) {
-		this.parent.log( `Attempting reconnect in ${delay} seconds.` );
+		this.log( `Attempting reconnect in ${delay} seconds.` );
 		clearTimeout( this.reconnectTimeout );
 		this.reconnectTimeout = setTimeout( () => {
 			this.connect();
@@ -130,8 +135,8 @@ class ProSDClient extends EventEmitter {
 		} );
 
 		this.ws.on( 'error', ( err ) => {
-			this.parent.log( 'ProPresenter WebSocket Error:' );
-			// this.parent.log(err);
+			this.log( 'ProPresenter WebSocket Error:' );
+			// this.log(err);
 			this.ws.terminate();
 			this.reconnect( 30 );
 			this.notify();
@@ -153,13 +158,13 @@ class ProSDClient extends EventEmitter {
 	}
 
 	check( data ) {
-		this.parent.log( data );
+		this.log( data );
 		let newdata = {};
 		switch ( data.acn ) {
 			case 'ath':
 				//{"acn":"ath","ath":true/false,"err":""}
 				if ( data.ath ) {
-					this.parent.log( 'ProPresenter Stage Display Client is Connected' );
+					this.log( 'ProPresenter Stage Display Client is Connected' );
 					this.active = true;
 					newdata = { type: 'authentication', data: true };
 				} else {
@@ -242,7 +247,7 @@ class ProSDClient extends EventEmitter {
 
 // incomplete at the moment
 class ProRemoteClient extends EventEmitter {
-	constructor ( host, port, password, version = 6, parent ) {
+	constructor ( host, port, password, version = 6, parent = null ) {
 		super();
 		this.connected = false;
 		this.controlling = false;
@@ -266,6 +271,11 @@ class ProRemoteClient extends EventEmitter {
 		this.connect();
 	}
 
+	log( s ) {
+		if ( this.parent != null ) this.parent.log( s );
+		else console.log( s );
+	}
+
 	close() {
 		this.ws?.terminate();
 		this.connected = false;
@@ -274,7 +284,7 @@ class ProRemoteClient extends EventEmitter {
 	}
 
 	reconnect( delay = 0 ) {
-		this.parent.log( `Attempting reconnect in ${delay} seconds.` );
+		this.log( `Attempting reconnect in ${delay} seconds.` );
 		clearTimeout( this.reconnectTimeout );
 		this.reconnectTimeout = setTimeout( () => {
 			this.connect();
@@ -302,7 +312,7 @@ class ProRemoteClient extends EventEmitter {
 
 		this.ws.on( 'message', ( data ) => {
 			data = JSON.parse( data );
-			this.parent.log( data );
+			this.log( data );
 			this.handleData( data );
 			// this.notify();
 		} );
